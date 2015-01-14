@@ -25,7 +25,7 @@ if [ "${version}" = "${release_version}" ]; then
 fi
 
 info "Setting version in pom.xml to ${release_version}"
-exec mvn --quiet versions:set -DnewVersion="${release_version}"
+exec mvn --quiet versions:set -DnewVersion="${release_version}" -DgenerateBackupPoms=false
 
 info 'Success!'
 
