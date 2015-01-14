@@ -2,6 +2,8 @@
 
 set -eu
 
+top_dir=$(dirname "$0")
+
 function info {
   echo "[INFO] $*"
 }
@@ -13,7 +15,7 @@ function error {
 info 'Starting update of pom.xml version to release...'
 
 # Get current maven version.
-version=$(./mvn-current-version)
+version=$("${top_dir}/mvn-current-version")
 info "Current Version: $version"
 
 release_version=$(echo "$version" | perl -p -e 's/-SNAPSHOT$//')
