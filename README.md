@@ -31,3 +31,8 @@ code 42.
 
 This tool is meant to prevent building non`-SNAPSHOT` builds when running
 code-verification (for example, with Gerrit).
+
+mvn-current-version
+-------------------
+
+Echoes the current version from the `pom.xml`.
