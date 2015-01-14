@@ -22,3 +22,12 @@ code 42.
 The output of this script is meant to imitate `mvn` output so you can parse it
 or highlight it with your normal maven logging tools. For example, in Jenkins
 we use a plugin that marks `[ERROR]` lines red for easy scanning.
+
+mvn-reject-release-version
+--------------------------
+
+If the version already doesn't include `-SNAPSHOT` it will quit with an exit
+code 42.
+
+This tool is meant to prevent building non`-SNAPSHOT` builds when running
+code-verification (for example, with Gerrit).

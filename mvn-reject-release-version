@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -eu
+
+function info {
+  echo "[INFO] $*"
+}
+
+function error {
+  echo "[ERROR] $*"
+}
+
+info 'Starting update of pom.xml version to release...'
+
+# Get current maven version.
+version=$(mvn help:evaluate -Dexpression=project.version | grep '^[0-9][0-9A-Za-z\.\-]*$')
+info "Current Version: $version"
+
+release_version=$(echo "$version" | perl -p -e 's/-SNAPSHOT$//')
+info "Release Version: $release_version"
+
+if [ "${version}" = "${release_version}" ]; then
+  error 'This is not a snapshot, aborting!'
+  exit 42
+fi
+
+info 'Success!'
+
+# EOF
