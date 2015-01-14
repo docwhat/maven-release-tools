@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -eu
+
+top_dir=$(dirname "$0")
+
+function info {
+  echo "[INFO] $*"
+}
+
+function error {
+  echo "[ERROR] $*"
+}
+
+info 'Starting update of pom.xml version to release...'
+
+# Get current maven version.
+current_version=$("${top_dir}/mvn-current-version")
+info "Current Version:      $current_version"
+
+if [[ *-SNAPSHOT == "${current_version}" ]]; then
+  error 'This is a snapshot, not a release!'
+  exit 42
+fi
+
+next_release_version=$(echo "${current_version}" | perl -pe 's/^((\d+\.)*)(\d+)$/$1.($3+1)/e')
+info "Next Release Version: ${next_release_version}"
+
+snapshot_version="${next_release_version}-SNAPSHOT"
+info "Snapshot Version:     $snapshot_version"
+
+info "Setting version in pom.xml to ${snapshot_version}"
+exec mvn --quiet versions:set -DnewVersion="${snapshot_version}" -DgenerateBackupPoms=false
+
+info 'Success!'
+
+# EOF

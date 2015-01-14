@@ -11,6 +11,10 @@ These tools were meant to help implement a process similar to the one mentioned
 in Alex Fontaine's blog post, [*Maven Release Plugin: The Final Nail in the
 Coffin*](http://axelfontaine.com/blog/final-nail.html).
 
+The output of these scripts are meant to imitate `mvn` output so you can parse
+it or highlight it with your normal maven logging tools. For example, in
+Jenkins we use a plugin that marks `[ERROR]` lines red for easy scanning.
+
 mvn-version-release-bump
 ------------------------
 
@@ -19,9 +23,13 @@ This tool removes the `-SNAPSHOT` part of the version from the `pom.xml`.
 If the version already doesn't include `-SNAPSHOT` it will quit with an exit
 code 42.
 
-The output of this script is meant to imitate `mvn` output so you can parse it
-or highlight it with your normal maven logging tools. For example, in Jenkins
-we use a plugin that marks `[ERROR]` lines red for easy scanning.
+mvn-version-snapshot-bump
+-------------------------
+
+This tool increments the version and adds the `-SNAPSHOT` part in the
+`pom.xml`.
+
+If the version already includes `-SNAPSHOT` it will quit with an exit code 42.
 
 mvn-reject-release-version
 --------------------------
